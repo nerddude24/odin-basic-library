@@ -1,0 +1,65 @@
+* {
+	margin: 0;
+}
+
+#main {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+
+	align-items: center;
+	padding: 2rem;
+}
+
+#header {
+	grid-column: 1/3;
+}
+
+#btn-open-modal {
+	align-self: center;
+	justify-self: stretch;
+	margin: 1rem;
+	height: 2rem;
+}
+
+table {
+	margin-left: 1rem;
+	width: max(75vw, 400px);
+}
+
+tr {
+	color: white;
+}
+
+td {
+	border-left: 1px solid white;
+	text-align: center;
+}
+
+dialog {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	translate: -50% -50%;
+}
+
+dialog::backdrop {
+	background-color: rgba(20, 20, 20, 0.5);
+}
+
+#btn-close-modal {
+	margin-bottom: 0.5rem;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.form-item {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	justify-content: space-between;
+}
