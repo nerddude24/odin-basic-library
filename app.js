@@ -11,18 +11,20 @@ const formRead = document.forms["form"]["read"];
 
 const myLibrary = [];
 
-function Book(title, author, pages, price, read) {
-	this.title = title;
-	this.author = author;
-	this.pages = pages;
-	this.price = price;
-	this.read = read;
+class Book {
+	constructor(title, author, pages, price, read) {
+		this.title = title;
+		this.author = author;
+		this.pages = pages;
+		this.price = price;
+		this.read = read;
 
-	this.info = function () {
-		return `${title} by ${author}, ${pages} pages, bought for ${price}, ${
-			read ? "read" : "not read yet"
-		}.`;
-	};
+		this.info = function () {
+			return `${title} by ${author}, ${pages} pages, bought for ${price}, ${
+				read ? "read" : "not read yet"
+			}.`;
+		};
+	}
 }
 
 function addBookToLibrary() {
