@@ -104,6 +104,87 @@ function displayBooks() {
 	}
 }
 
+function getErrorSpanElement(sibling) {
+	return sibling.parentElement.querySelector(".error");
+}
+
+function checkFormTitle() {
+	const error = getErrorSpanElement(formTitle);
+
+	if (formTitle.validity.valid) {
+		error.textContent = "";
+		error.className = "error";
+		return true;
+	}
+
+	// else if the input is invalid:
+	if (formTitle.validity.valueMissing) {
+		error.textContent = "Please enter the book title!";
+	}
+
+	error.className = "error active";
+	return false;
+}
+
+function checkFormAuthor() {
+	const error = getErrorSpanElement(formAuthor);
+
+	if (formAuthor.validity.valid) {
+		error.textContent = "";
+		error.className = "error";
+		return true;
+	}
+
+	// else if the input is invalid:
+	if (formAuthor.validity.valueMissing) {
+		error.textContent = "Please enter the book author's name!";
+	}
+
+	error.className = "error active";
+	return false;
+}
+
+function checkFormPages() {
+	const error = getErrorSpanElement(formPages);
+
+	if (formPages.validity.valid || formPages.value.length === 0) {
+		error.textContent = "";
+		error.className = "error";
+		return true;
+	}
+
+	// else if the input is invalid:
+	if (formPages.validity.rangeUnderflow) {
+		error.textContent = `That's too small for a book! (min is ${formPages.min})`;
+	}
+
+	error.className = "error active";
+	return false;
+}
+
+function validateBookForm(event) {
+	// TODO: Add some actual form validation
+
+	// these return false if they find an error.
+	if (!checkFormTitle() || !checkFormAuthor() || !checkFormPages()) {
+		event.preventDefault();
+		return;
+	}
+
+	const book = new Book(
+		formTitle.value,
+		formAuthor.value,
+		formPages.value,
+		formPrice.value,
+		formRead.checked
+	);
+	myLibrary.push(book);
+
+	// update ui and reset the form
+	displayBooks();
+	form.reset();
+}
+
 function setupEvents() {
 	// logic for form modal visibility
 	showModalButton.addEventListener("click", () => {
@@ -114,28 +195,12 @@ function setupEvents() {
 		modal.close();
 	});
 
+	formTitle.addEventListener("input", checkFormTitle);
+	formAuthor.addEventListener("input", checkFormAuthor);
+	formPages.addEventListener("input", checkFormPages);
+
 	// form submission handling
-	fromSubmitButton.addEventListener("click", (event) => {
-		// TODO: Add some actual form validation
-		if (formTitle.value.length === 0) {
-			event.preventDefault();
-			alert("Book title can't be empty!");
-			return;
-		}
-
-		const book = new Book(
-			formTitle.value,
-			formAuthor.value,
-			formPages.value,
-			formPrice.value,
-			formRead.checked
-		);
-		myLibrary.push(book);
-
-		// update ui and reset the form
-		displayBooks();
-		form.reset();
-	});
+	fromSubmitButton.addEventListener("click", validateBookForm);
 }
 
 function start() {

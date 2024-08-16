@@ -25,7 +25,7 @@
 		</div>
 		<dialog>
 			<button id="btn-close-modal">X</button>
-			<form method="dialog" id="form">
+			<form method="dialog" id="form" novalidate>
 				<div class="form-item">
 					<label for="title">Book title: </label>
 					<input type="text" id="title" required />
@@ -44,11 +44,10 @@
 				<div class="form-item">
 					<label for="price">Price: </label>
 					<input type="tel" id="price" />
-					<span class="error" aria-live="polite"></span>
 				</div>
 				<div class="form-item">
-					<label for="read">Have you read it? </label
-					><input type="checkbox" id="read" />
+					<label for="read">Have you read it? </label>
+					<input type="checkbox" id="read" />
 				</div>
 				<button type="submit" id="form-submit-btn">Add</button>
 			</form>
