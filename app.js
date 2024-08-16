@@ -187,6 +187,7 @@ function checkFormPrice() {
 	error.className = "error";
 	return true;
 }
+
 function validateBookForm(event) {
 	// these return false if they find an error.
 	if (
