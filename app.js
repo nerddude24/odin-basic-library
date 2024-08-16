@@ -162,11 +162,39 @@ function checkFormPages() {
 	return false;
 }
 
-function validateBookForm(event) {
-	// TODO: Add some actual form validation
+function checkFormPrice() {
+	const error = getErrorSpanElement(formPrice);
 
+	if (formPrice.value.length === 0) {
+		error.textContent = "";
+		error.className = "error";
+		return true;
+	}
+
+	if (isNaN(formPrice.value)) {
+		error.textContent = "That isn't a number!";
+		error.className = "error active";
+		return false;
+	}
+
+	if (Number(formPrice.value) <= 0) {
+		error.textContent = "Price can't be negative!";
+		error.className = "error active";
+		return false;
+	}
+
+	error.textContent = "";
+	error.className = "error";
+	return true;
+}
+function validateBookForm(event) {
 	// these return false if they find an error.
-	if (!checkFormTitle() || !checkFormAuthor() || !checkFormPages()) {
+	if (
+		!checkFormTitle() ||
+		!checkFormAuthor() ||
+		!checkFormPages() ||
+		!checkFormPrice()
+	) {
 		event.preventDefault();
 		return;
 	}
@@ -198,6 +226,7 @@ function setupEvents() {
 	formTitle.addEventListener("input", checkFormTitle);
 	formAuthor.addEventListener("input", checkFormAuthor);
 	formPages.addEventListener("input", checkFormPages);
+	formPrice.addEventListener("input", checkFormPrice);
 
 	// form submission handling
 	fromSubmitButton.addEventListener("click", validateBookForm);
