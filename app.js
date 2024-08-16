@@ -1,6 +1,5 @@
 const showModalButton = document.querySelector("#btn-open-modal");
 const closeModalButton = document.querySelector("#btn-close-modal");
-const addBookButton = document.querySelector("#btn-add-book");
 const modal = document.querySelector("dialog");
 const form = document.querySelector("form");
 const formTitle = document.forms["form"]["title"];
@@ -8,6 +7,7 @@ const formAuthor = document.forms["form"]["author"];
 const formPages = document.forms["form"]["pages"];
 const formPrice = document.forms["form"]["price"];
 const formRead = document.forms["form"]["read"];
+const fromSubmitButton = document.querySelector("#btn-add-book");
 
 const myLibrary = [];
 
@@ -27,7 +27,8 @@ class Book {
 	}
 }
 
-function addBookToLibrary() {
+/* Deprecated
+function _addBookToLibrary() {
 	const title = prompt("What's the title of the book?");
 	const author = prompt("Who's the author?");
 	const pages = prompt("How many pages is it?");
@@ -40,22 +41,25 @@ function addBookToLibrary() {
 	console.log("Added Book: ");
 	console.log(newBook);
 }
+*/
 
 function displayBooks() {
 	console.log("Rebuilding table...");
 	const table = document.getElementById("table");
 
+	// Loop through the table element's rows and delete them,
+	// starting from the second row
 	var rowCount = table.rows.length;
-
-	// Loop through the rows, starting from the second row
-	for (var i = rowCount - 1; i > 0; i--) {
+	for (let i = rowCount - 1; i > 0; i--) {
 		table.deleteRow(i);
 	}
 
 	for (let i = 0; i < myLibrary.length; i++) {
+		// for each book object in the library list, make a table row with it's information.
 		const book = myLibrary[i];
 		const bookRow = document.createElement("tr");
 
+		/* appropriate cells for the book row */
 		const titleCell = document.createElement("td");
 		titleCell.textContent = book.title;
 		bookRow.appendChild(titleCell);
@@ -94,12 +98,14 @@ function displayBooks() {
 		const deleteCell = document.createElement("td");
 		deleteCell.appendChild(deleteButton);
 		bookRow.appendChild(deleteCell);
+		/*---------------------*/
 
 		table.appendChild(bookRow);
 	}
 }
 
 function setupEvents() {
+	// logic for form modal visibility
 	showModalButton.addEventListener("click", () => {
 		modal.showModal();
 	});
@@ -108,7 +114,9 @@ function setupEvents() {
 		modal.close();
 	});
 
-	addBookButton.addEventListener("click", (event) => {
+	// form submission handling
+	fromSubmitButton.addEventListener("click", (event) => {
+		// TODO: Add some actual form validation
 		if (formTitle.value.length === 0) {
 			event.preventDefault();
 			alert("Book title can't be empty!");
@@ -124,6 +132,7 @@ function setupEvents() {
 		);
 		myLibrary.push(book);
 
+		// update ui and reset the form
 		displayBooks();
 		form.reset();
 	});
