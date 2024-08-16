@@ -7,7 +7,7 @@ const formAuthor = document.forms["form"]["author"];
 const formPages = document.forms["form"]["pages"];
 const formPrice = document.forms["form"]["price"];
 const formRead = document.forms["form"]["read"];
-const fromSubmitButton = document.querySelector("#btn-add-book");
+const fromSubmitButton = document.querySelector("#form-submit-btn");
 
 const myLibrary = [];
 
